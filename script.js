@@ -6,6 +6,9 @@ const EDGE_FUNCTION_URL =
 const EDGE_FUNCTION_API_KEY =
   (typeof window !== "undefined" && window.__FITTNA_EDGE_FUNCTION_ANON_KEY__) ||
   SUPABASE_KEY;
+const EMAIL_FROM_ADDRESS =
+  (typeof window !== "undefined" && window.__FITTNA_EMAIL_FROM__) ||
+  "FittnaClass <noreply@fittnaclass.online>";
 const MONITOR_ENDPOINT =
   (typeof window !== "undefined" && window.__FITTNA_MONITOR_ENDPOINT__) || "";
 const supabaseClient =
@@ -236,6 +239,7 @@ async function triggerConfirmationEmail(email, role) {
     supabaseKey: SUPABASE_KEY,
     edgeFunctionUrl: EDGE_FUNCTION_URL,
     edgeFunctionApiKey: EDGE_FUNCTION_API_KEY,
+    from: EMAIL_FROM_ADDRESS,
     logger: console,
     onEvent: trackOperationalEvent,
   };
@@ -270,6 +274,7 @@ async function triggerConfirmationEmail(email, role) {
       body: JSON.stringify({
         email: email,
         role: role,
+        from: EMAIL_FROM_ADDRESS,
       }),
     });
 

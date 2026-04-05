@@ -1,5 +1,11 @@
 (function (globalObject) {
   const DEFAULT_FUNCTION_PATH = "/functions/v1/clever-handler";
+  const DEFAULT_SENDER_EMAIL = "noreply@fittnaclass.online";
+  const ALLOWED_SENDER_ADDRESSES = new Set([
+    "noreply@fittnaclass.online",
+    "hello@fittnaclass.online",
+    "support@fittnaclass.online",
+  ]);
 
   function resolveEdgeFunctionUrl(options) {
     const configuredUrl = String(options?.edgeFunctionUrl || "").trim();
@@ -27,6 +33,32 @@
     }
 
     return headers;
+  }
+
+  function extractAddress(fromValue) {
+    const normalized = String(fromValue || "").trim();
+    const angleBracketMatch = normalized.match(/<([^>]+)>/);
+
+    if (angleBracketMatch && angleBracketMatch[1]) {
+      return angleBracketMatch[1].trim().toLowerCase();
+    }
+
+    return normalized.toLowerCase();
+  }
+
+  function normalizeSender(options) {
+    const requestedSender = String(options?.from || "").trim();
+    const senderAddress = requestedSender
+      ? extractAddress(requestedSender)
+      : DEFAULT_SENDER_EMAIL;
+
+    if (!ALLOWED_SENDER_ADDRESSES.has(senderAddress)) {
+      throw new Error(
+        "Invalid sender address. Allowed senders: noreply@fittnaclass.online, hello@fittnaclass.online, support@fittnaclass.online"
+      );
+    }
+
+    return `FittnaClass <${senderAddress}>`;
   }
 
   function createSafeLogger(options) {
@@ -93,8 +125,10 @@
     const logger = createSafeLogger(options);
     const edgeFunctionUrl = resolveEdgeFunctionUrl(options);
     let payload;
+    let sender;
     try {
       payload = normalizeEmailPayload(options);
+      sender = normalizeSender(options);
     } catch (validationError) {
       emitEvent(options, {
         level: "error",
@@ -131,7 +165,10 @@
       response = await fetchImplementation(edgeFunctionUrl, {
         method: "POST",
         headers: resolveAuthHeaders(options),
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          from: sender,
+        }),
       });
     } catch (networkError) {
       const wrappedNetworkError = new Error(`Email trigger failed (network error): ${networkError?.message || networkError}`);
@@ -175,6 +212,7 @@
   const EmailService = {
     resolveEdgeFunctionUrl,
     resolveAuthHeaders,
+    normalizeSender,
     normalizeEmailPayload,
     triggerConfirmationEmail,
   };

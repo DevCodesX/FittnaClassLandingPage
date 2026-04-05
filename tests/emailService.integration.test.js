@@ -43,11 +43,36 @@ test("triggerConfirmationEmail sends POST with Bearer token and payload", async 
   });
   assert.equal(
     calls[0].init.body,
-    JSON.stringify({ email: "user@example.com", role: "student" })
+    JSON.stringify({
+      email: "user@example.com",
+      role: "student",
+      from: "FittnaClass <noreply@fittnaclass.online>",
+    })
   );
   assert.equal(events[0].code, "request_start");
   assert.equal(events[1].code, "request_success");
   assert.equal(logs.some((entry) => entry.level === "info"), true);
+});
+
+test("triggerConfirmationEmail rejects unsupported sender address", async () => {
+  const fetchMock = async () => ({
+    ok: true,
+    status: 200,
+    statusText: "OK",
+    text: async () => "",
+  });
+
+  await assert.rejects(
+    () =>
+      triggerConfirmationEmail(fetchMock, {
+        email: "user@example.com",
+        role: "teacher",
+        from: "FittnaClass <onboarding@resend.dev>",
+        supabaseUrl: "https://aukkolqcucuzifmdeqkc.supabase.co",
+        edgeFunctionApiKey: "anon-key",
+      }),
+    /Invalid sender address/
+  );
 });
 
 test("triggerConfirmationEmail throws detailed error for unauthorized responses", async () => {

@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const {
   resolveEdgeFunctionUrl,
   resolveAuthHeaders,
+  normalizeSender,
   normalizeEmailPayload,
 } = require("../emailService.js");
 
@@ -84,6 +85,30 @@ test("resolveEdgeFunctionUrl handles environment-specific Supabase projects", ()
       `Unexpected URL for ${environment.name}`
     );
   });
+});
+
+test("normalizeSender uses noreply address by default", () => {
+  const from = normalizeSender({});
+  assert.equal(from, "FittnaClass <noreply@fittnaclass.online>");
+});
+
+test("normalizeSender accepts allowed fittnaclass addresses only", () => {
+  const senderOne = normalizeSender({
+    from: "FittnaClass <hello@fittnaclass.online>",
+  });
+  const senderTwo = normalizeSender({
+    from: "support@fittnaclass.online",
+  });
+
+  assert.equal(senderOne, "FittnaClass <hello@fittnaclass.online>");
+  assert.equal(senderTwo, "FittnaClass <support@fittnaclass.online>");
+});
+
+test("normalizeSender rejects disallowed sender domain", () => {
+  assert.throws(
+    () => normalizeSender({ from: "FittnaClass <onboarding@resend.dev>" }),
+    /Invalid sender address/
+  );
 });
 
 test("normalizeEmailPayload trims email and normalizes supported role", () => {
