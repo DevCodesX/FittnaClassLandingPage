@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FittnaClass | منصة المتفوقين</title>
+  <meta name="description" content="FittnaClass منصة تعليمية ذكية لطلاب الثانوية العامة تساعدك على تنظيم المنهج، متابعة التقدم، والمذاكرة بشكل أسرع.">
+  <link rel="icon" href="./assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <link rel="manifest" href="./assets/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-nav">
+    <nav class="container nav-inner" aria-label="التنقل الرئيسي">
+      <a class="brand" href="#home">FittnaClass</a>
+
+      <ul class="nav-links" id="desktop-links">
+        <li><a class="nav-link is-active" href="#features">Features</a></li>
+        <li><a class="nav-link" href="#how-it-works">How It Works</a></li>
+        <li><a class="nav-link" href="#preview">Preview</a></li>
+        <li><a class="nav-link" href="#pricing">Pricing</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary nav-cta" href="#waitlist">Get Started</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="فتح قائمة التنقل">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#preview">Preview</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-primary" href="#waitlist">Get Started</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content" data-reveal>
+          <div class="hero-badge">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            <span>Early Access Is Open</span>
+          </div>
+
+          <h1>
+            ذاكر بذكاء
+            <span>مش بمجهود</span>
+          </h1>
+
+          <p>
+            منصة تعليمية مصممة لطلاب الثانوية العامة بنظام منظم وسهل يخليك توصل
+            لحلمك بأقصر طريق ممكن.
+          </p>
+
+          <form class="email-form hero-form" id="email-form" novalidate>
+            <div class="role-selector" role="radiogroup" aria-label="اختيار الدور">
+              <button class="role-option is-active" type="button" data-role="student" aria-pressed="true">
+                <span class="role-icon" aria-hidden="true">🎓</span>
+                <span class="role-label">طالب</span>
+              </button>
+              <button class="role-option" type="button" data-role="teacher" aria-pressed="false">
+                <span class="role-icon" aria-hidden="true">👨‍🏫</span>
+                <span class="role-label">مدرس</span>
+              </button>
+            </div>
+            <input type="hidden" name="role" id="role-input" value="student">
+            <div class="form-row">
+              <input type="email" id="email-input" name="email" placeholder="بريدك الإلكتروني" required aria-label="البريد الإلكتروني">
+              <button type="submit" class="btn btn-gradient">احجز مكانك قبل الإطلاق</button>
+            </div>
+          </form>
+          <p class="form-message" id="form-message" aria-live="polite"></p>
+        </div>
+
+        <div class="hero-media" data-reveal>
+          <div class="hero-glow hero-glow-one"></div>
+          <div class="hero-glow hero-glow-two"></div>
+          <div class="media-frame">
+            <img src="https://cdn.dribbble.com/userupload/16872128/file/original-b764fc22fdec47426ff164bbe2d9626d.png?format=webp&resize=400x300&vertical=center" alt="واجهة منصة تعليمية عربية تعرض المواد الدراسية وتقدم الطالب">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="coming-soon-section" aria-label="Coming soon offer">
+      <div class="container">
+        <div class="coming-soon-banner">
+          <p class="coming-soon-text">🚀 Coming Soon — احجز مكانك وخد خصم الإطلاق</p>
+          <p class="coming-soon-countdown">ينتهي العرض خلال: <span id="coming-soon-time">00:00:00</span></p>
+          <p class="coming-soon-urgency">🔥 متبقي عدد محدود من الأماكن للدخول المبكر</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="social-proof pricing-preview" id="pricing">
+      <div class="container">
+        <div class="pricing-teaser-card" data-reveal>
+          <p class="pricing-teaser-badge">🎯 خصومات حصرية لأول المشتركين</p>
+          <h2>💰 أسعار بسيطة… وقيمة كبيرة</h2>
+          <p class="pricing-teaser-subtitle">هنقدملك تجربة تعليمية متكاملة بأفضل سعر ممكن — مناسبة لكل طالب</p>
+
+          <ul class="pricing-teaser-list">
+            <li>📚 محتوى منظم حسب المنهج</li>
+            <li>🎥 فيديوهات قصيرة ومركزة</li>
+            <li>📊 متابعة مستواك أول بأول</li>
+            <li>⚡ تجربة سريعة وسهلة</li>
+          </ul>
+
+          <p class="pricing-teaser-urgency">🔥 احجز مكانك الآن واحصل على خصم خاص عند الإطلاق</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <h2>ليه تختار FittnaClass؟</h2>
+          <p>كل اللي محتاجه عشان تتفوق في مكان واحد</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card" data-reveal>
+            <div class="icon-box">
+              <span class="material-symbols-outlined">dashboard_customize</span>
+            </div>
+            <h3>تنظيم المنهج بالكامل</h3>
+            <p>جدول ذكي ينظملك يومك ويقسم دروسك بشكل تلقائي.</p>
+          </article>
+
+          <article class="feature-card" data-reveal>
+            <div class="icon-box icon-purple">
+              <span class="material-symbols-outlined">play_circle</span>
+            </div>
+            <h3>فيديوهات قصيرة ومركزة</h3>
+            <p>شرح مكثف للمعلومات المهمة بدون رغي وتضييع وقت.</p>
+          </article>
+
+          <article class="feature-card" data-reveal>
+            <div class="icon-box icon-cyan">
+              <span class="material-symbols-outlined">bolt</span>
+            </div>
+            <h3>تجربة سهلة وسريعة</h3>
+            <p>واجهة مستخدم مصممة عشان تركز في المذاكرة وبس.</p>
+          </article>
+
+          <article class="feature-card" data-reveal>
+            <div class="icon-box icon-indigo">
+              <span class="material-symbols-outlined">monitoring</span>
+            </div>
+            <h3>متابعة تقدمك</h3>
+            <p>إحصائيات دقيقة عن مستواك في كل مادة بشكل دوري.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <h2 data-reveal>خطوات بسيطة وتبدأ نجاحك</h2>
+
+        <div class="steps-grid">
+          <article class="step-card" data-reveal>
+            <span class="step-number">01</span>
+            <div class="step-body">
+              <span class="material-symbols-outlined">person_add</span>
+              <h3>سجل حسابك</h3>
+              <p>بسهولة جداً من موبايلك أو الكمبيوتر.</p>
+            </div>
+          </article>
+
+          <article class="step-card step-shift" data-reveal>
+            <span class="step-number">02</span>
+            <div class="step-body">
+              <span class="material-symbols-outlined">auto_stories</span>
+              <h3>اختار المادة</h3>
+              <p>كل مواد الثانوية العامة تحت إشراف نخبة من المدرسين.</p>
+            </div>
+          </article>
+
+          <article class="step-card" data-reveal>
+            <span class="step-number">03</span>
+            <div class="step-body">
+              <span class="material-symbols-outlined">school</span>
+              <h3>ابدأ المذاكرة</h3>
+              <p>انطلق في رحلة تعلم ممتعة ومنظمة جداً.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview" id="preview">
+      <div class="container">
+        <h2 data-reveal>نظرة سريعة على تجربتك داخل المنصة</h2>
+
+        <div class="preview-grid">
+          <figure class="preview-card preview-dashboard" data-reveal>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLEbnWcguaSNvU6GxCeXT_7X6esMR8nLINiruH8MOw0Lhdd0Fge6jCXpw5cuPZjNYgKwWiOEBMH_x5_SAycVCsdjQbUd0YFdCrelmczzDUJ_c7F2bVbGuuvrieIffb9MHFi1GorfD4cfall0CQ0BOpam5YQoZFldwvogIzy7hXKNlZ7lXSV5C8wUn2jf48tvFkKy04JOybwEFGZbgNzdyeXUc4KO8W1n5eAre754i5AeUstk8DE6OVWV5I71RunycDkNG9PcRRujg" alt="لوحة التحكم">
+            <figcaption>لوحة تحكم شاملة</figcaption>
+          </figure>
+
+          <figure class="preview-card preview-video" data-reveal>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBULXQl4rwZZWIOfdkmoO9KHbXRteZee6ywzZRRZS1A_qTLaBTUVONmTsYKZ5MbqpVs1ebCAZ-2dfkDzRqPSVKMJCiMB0MuPndgyZNnVb9PwMCqlmI5eM4SzvVYWImyJWLhkI7GqH2zR-tblMwtQfG84JPnn3LNn7VqwTf12bd5d2_3-mVudUNwqjCjT67ik7ONUcoZj-qIsuoqCDax6SEY4jj71-KGnPGsP9PiUhwogUjZ-7uoGCzSSYza1WGn7oxoEq8Ser6w1s" alt="مشغل فيديو">
+            <figcaption>مشغل فيديوهات ذكي</figcaption>
+          </figure>
+
+          <figure class="preview-card preview-courses" data-reveal>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEYqHIM8ZTbzl4oyakWvNOomzI4UqbsSeALDrcyZG_mMVzhsQXUA-7BhbWEB0AC1h5PlM0X4nWMCC-p0B2-UfWGflBgKgnBnEMvLAL-FMryoNFtP_QvE_dKl5LcpMBIPASDPRVk9OYW_C6i58_rvh8Uu_iY7GPX0fRKMJMRogOaHIYnTx_8kHdLFovuI1-TQDrUQ9PMgezAhl5RFY0Da12vH9GJc3jg1CNzbDny5RTB4cHbYtsk9y2iLVuW2PuC7tEcbi_W-e_N30" alt="استكشاف المواد">
+            <figcaption>استكشف المواد</figcaption>
+          </figure>
+
+          <figure class="preview-card preview-analytics" data-reveal>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkWwLjkcspJ2F-HkLq37iYL60-5JU1NXE8IXi7S58BY1r1lp5uSDuBN88HwNoPuHkmMriPG7xFRKThaJCPPQWyC15dGznobeuA0LBSgG-5uM8tHGfTkmYJKJ4tdazT-oHMb7sjyKeaEmq4Wa5Z9YEJ_xzGG7AKSSAHFSpjYbpEWW6oJ4p-NGRcU2V85KTLURLpXceV2VGxXGn9x7uEQ0rM1GIcFrv8alplrjz7XAB6uj5_lThGS5tCTSRp7oLA3WLkpsnCbt7MHlo" alt="إحصائيات الأداء">
+            <figcaption>إحصائيات الأداء</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="waitlist">
+      <div class="container">
+        <div class="cta-card" data-reveal>
+          <h2>ابدأ رحلتك دلوقتي</h2>
+          <p class="cta-alert">عدد محدود للدخول المبكر</p>
+
+          <form class="email-form cta-form" novalidate>
+            <div class="form-row">
+              <input type="email" name="email" placeholder="بريدك الإلكتروني" required aria-label="البريد الإلكتروني">
+              <button type="submit" class="btn btn-light">سجل الآن</button>
+            </div>
+          </form>
+          <p class="form-message" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <h3>FittnaClass</h3>
+        <p>© 2024 FittnaClass. Empowering Egyptian students to excel.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Student Support</a>
+      </div>
+
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><span class="material-symbols-outlined">social_leaderboard</span></a>
+        <a href="#" aria-label="Email"><span class="material-symbols-outlined">alternate_email</span></a>
+        <a href="#" aria-label="Share"><span class="material-symbols-outlined">share</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="emailService.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
